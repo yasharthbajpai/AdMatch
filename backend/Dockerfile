@@ -13,8 +13,8 @@ RUN playwright install chromium
 # Copy source
 COPY . .
 
-# Expose port
+# Expose port (Railway overrides with $PORT at runtime)
 EXPOSE 8000
 
-# Start server
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Start server — use $PORT so Railway can route traffic correctly
+CMD uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
